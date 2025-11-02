@@ -25,13 +25,13 @@ Just replace `Menu` with `FixedMenu`:
 ```swift
 import FixedMenu
 
-FixedMenu(content: {
+FixedMenu {
     Button("Edit") { }
     Button("Share") { }
     Button("Delete", role: .destructive) { }
-}, label: {
+} label: {
     Text("Options")
-})
+}
 ```
 
 ## Requirements
