@@ -7,17 +7,8 @@ public struct FixedMenu<Label: View, Content: View>: View {
     
     public init(
         @ViewBuilder content: @escaping () -> Content,
-        @ViewBuilder label: @escaping () -> Label
-    ) {
-        self.content = content
-        self.label = label
-        self.primaryAction = nil
-    }
-    
-    public init(
-        @ViewBuilder content: @escaping () -> Content,
         @ViewBuilder label: @escaping () -> Label,
-        primaryAction: @escaping () -> Void
+        primaryAction: (() -> Void)? = nil
     ) {
         self.content = content
         self.label = label
