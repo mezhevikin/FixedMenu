@@ -18,36 +18,22 @@ public struct FixedMenu<Label: View, Content: View>: View {
     public var body: some View {
         if #available(iOS 26, *) {
             GlassEffectContainer {
-                if let primaryAction {
-                    Menu(
-                        content: content,
-                        label: { label().glassEffect(.identity) },
-                        primaryAction: primaryAction
-                    )
-                    .menuOrder(.fixed)
-                    .clipped()
-                } else {
-                    Menu(
-                        content: content,
-                        label: { label().glassEffect(.identity) }
-                    )
-                    .menuOrder(.fixed)
-                    .clipped()
+                menu {
+                    label().glassEffect(.identity)
                 }
+                .clipped()
             }
         } else {
-            if let primaryAction {
-                Menu(
-                    content: content,
-                    label: label,
-                    primaryAction: primaryAction
-                )
-            } else {
-                Menu(
-                    content: content,
-                    label: label
-                )
-            }
+            menu(label: label)
+        }
+    }
+    
+    @ViewBuilder
+    private func menu<L: View>(@ViewBuilder label: @escaping () -> L) -> some View {
+        if let primaryAction {
+            Menu(content: content, label: label, primaryAction: primaryAction)
+        } else {
+            Menu(content: content, label: label)
         }
     }
 }
