@@ -4,11 +4,11 @@ A SwiftUI Menu wrapper that keeps your label visible in iOS 26.
 
 ## The Problem
 
-iOS 26 changed how `Menu` works. Now the label disappears when you open the menu. This looks bad and confuses users.
+iOS 26 changed how `Menu` works. Now the label disappears when you open the menu. This looks bad and confuses users. There is also a flickering animation when the menu closes.
 
 ## Solution
 
-`FixedMenu` keeps the label visible on iOS 26, while working normally on older iOS versions.
+`FixedMenu` keeps the label visible on iOS 26 and removes the flickering animation when the menu closes, while working normally on older iOS versions.
 
 ## Installation
 

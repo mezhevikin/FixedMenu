@@ -1,8 +1,8 @@
 import SwiftUI
 
 public struct FixedMenu<Label: View, Content: View>: View {
-    @ViewBuilder let content: () -> Content
-    @ViewBuilder let label: () -> Label
+    let content: () -> Content
+    let label: () -> Label
     let primaryAction: (() -> Void)?
     
     public init(
@@ -17,43 +17,37 @@ public struct FixedMenu<Label: View, Content: View>: View {
     
     public var body: some View {
         if #available(iOS 26, *) {
-            newBody
+            GlassEffectContainer {
+                if let primaryAction {
+                    Menu(
+                        content: content,
+                        label: { label().glassEffect(.identity) },
+                        primaryAction: primaryAction
+                    )
+                    .menuOrder(.fixed)
+                    .clipped()
+                } else {
+                    Menu(
+                        content: content,
+                        label: { label().glassEffect(.identity) }
+                    )
+                    .menuOrder(.fixed)
+                    .clipped()
+                }
+            }
         } else {
-            oldBody
-        }
-    }
-    
-    @ViewBuilder
-    private var newBody: some View {
-        ZStack {
-            label()
             if let primaryAction {
                 Menu(
                     content: content,
-                    label: { Color.clear },
-                    primaryAction: primaryAction)
+                    label: label,
+                    primaryAction: primaryAction
+                )
             } else {
                 Menu(
                     content: content,
-                    label: { Color.clear}
+                    label: label
                 )
             }
-        }
-    }
-    
-    @ViewBuilder
-    private var oldBody: some View {
-        if let primaryAction {
-            Menu(
-                content: content,
-                label: label,
-                primaryAction: primaryAction
-            )
-        } else {
-            Menu(
-                content: content,
-                label: label
-            )
         }
     }
 }
